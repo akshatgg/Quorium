@@ -88,7 +88,7 @@ function App() {
   const renderActiveTab = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard studentCount={students.length} students={students} />;
+        return <Dashboard studentCount={students.length} students={students} onNavigate={setActiveTab} />;
       case 'students':
         return (
           <StudentsList 

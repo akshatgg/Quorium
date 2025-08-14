@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Dashboard = ({ studentCount, students = [] }) => {
+const Dashboard = ({ studentCount, students = [], onNavigate }) => {
+  const [showAllCourses, setShowAllCourses] = useState(false);
+  
   // Calculate statistics
   const activeStudents = students.filter(student => student.status === 'Active').length;
   const inactiveStudents = students.filter(student => student.status === 'Inactive').length;
   const graduatedStudents = students.filter(student => student.status === 'Graduated').length;
   const totalCourses = [...new Set(students.map(student => student.course))].length;
+  
+  // Get all unique courses with student counts
+  const coursesData = students.reduce((acc, student) => {
+    const course = student.course || 'Unknown Course';
+    if (!acc[course]) {
+      acc[course] = {
+        name: course,
+        totalStudents: 0,
+        activeStudents: 0,
+        graduatedStudents: 0
+      };
+    }
+    acc[course].totalStudents += 1;
+    if (student.status === 'Active') acc[course].activeStudents += 1;
+    if (student.status === 'Graduated') acc[course].graduatedStudents += 1;
+    return acc;
+  }, {});
+  
+  const coursesList = Object.values(coursesData).sort((a, b) => b.totalStudents - a.totalStudents);
 
   const stats = [
     {
@@ -52,13 +73,6 @@ const Dashboard = ({ studentCount, students = [] }) => {
       change: '+15%',
       changeType: 'increase'
     }
-  ];
-
-  const recentActivities = [
-    { action: 'New student registered', name: 'John Doe', time: '2 hours ago', type: 'success' },
-    { action: 'Course enrollment', name: 'Jane Smith', time: '4 hours ago', type: 'info' },
-    { action: 'Profile updated', name: 'Mike Johnson', time: '6 hours ago', type: 'warning' },
-    { action: 'Student graduated', name: 'Sarah Wilson', time: '1 day ago', type: 'success' }
   ];
 
   return (
@@ -122,51 +136,93 @@ const Dashboard = ({ studentCount, students = [] }) => {
 
       {/* Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activities */}
+        {/* All Courses */}
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-900">Recent Activities</h3>
-            <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-              View All
-            </button>
+            <h3 className="text-lg font-semibold text-gray-900">All Courses</h3>
+            <span className="text-sm text-gray-500">{coursesList.length} courses available</span>
           </div>
           
-          <div className="space-y-4">
-            {recentActivities.map((activity, index) => (
-              <div key={index} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-medium ${
-                  activity.type === 'success' ? 'bg-green-500' :
-                  activity.type === 'info' ? 'bg-blue-500' :
-                  activity.type === 'warning' ? 'bg-amber-500' : 'bg-gray-500'
-                }`}>
-                  {activity.type === 'success' ? '✓' :
-                   activity.type === 'info' ? 'ℹ' :
-                   activity.type === 'warning' ? '⚠' : '•'}
+          <div className="space-y-3">
+            {coursesList.length > 0 ? (
+              <>
+                {(showAllCourses ? coursesList : coursesList.slice(0, 5)).map((course, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors duration-200">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 mb-1 truncate">{course.name}</h4>
+                      <div className="flex items-center space-x-3 text-xs text-gray-500">
+                        <span className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-1"></div>
+                          {course.totalStudents} total
+                        </span>
+                        <span className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full mr-1"></div>
+                          {course.activeStudents} active
+                        </span>
+                        <span className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-1"></div>
+                          {course.graduatedStudents} graduated
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right ml-4">
+                      <div className="text-lg font-semibold text-gray-900">{course.totalStudents}</div>
+                      <div className="text-xs text-gray-500">students</div>
+                    </div>
+                  </div>
+                ))}
+                
+                {coursesList.length > 5 && (
+                  <div className="pt-3 border-t border-gray-100">
+                    <button
+                      onClick={() => setShowAllCourses(!showAllCourses)}
+                      className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-all duration-200"
+                    >
+                      {showAllCourses ? (
+                        <>
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                          </svg>
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                          Show All ({coursesList.length - 5} more)
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-gray-400 mb-2">
+                  <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {activity.action}
-                  </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    {activity.name}
-                  </p>
-                </div>
-                <div className="text-xs text-gray-400 whitespace-nowrap">
-                  {activity.time}
-                </div>
+                <p className="text-gray-500">No courses available</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
-        {/* Quick Actions */}
+        {/* Quick Actions & Analytics */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h3>
           
           <div className="space-y-3">
-            <button className="w-full flex items-center space-x-3 p-3 text-left rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group">
+            <button 
+              onClick={() => onNavigate && onNavigate('add')}
+              className="w-full flex items-center space-x-3 p-3 text-left rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 group"
+            >
               <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-200">
-                ➕
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
               </div>
               <div>
                 <p className="font-medium text-gray-900">Add New Student</p>
@@ -174,25 +230,66 @@ const Dashboard = ({ studentCount, students = [] }) => {
               </div>
             </button>
             
-            <button className="w-full flex items-center space-x-3 p-3 text-left rounded-lg border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200 group">
+            <button 
+              onClick={() => onNavigate && onNavigate('students')}
+              className="w-full flex items-center space-x-3 p-3 text-left rounded-lg border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200 group"
+            >
               <div className="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                📊
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </div>
               <div>
-                <p className="font-medium text-gray-900">Generate Report</p>
-                <p className="text-sm text-gray-500">Export student data</p>
+                <p className="font-medium text-gray-900">View All Students</p>
+                <p className="text-sm text-gray-500">Browse student directory</p>
               </div>
             </button>
             
             <button className="w-full flex items-center space-x-3 p-3 text-left rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 group">
               <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors duration-200">
-                ⚙️
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
               </div>
               <div>
-                <p className="font-medium text-gray-900">Settings</p>
-                <p className="text-sm text-gray-500">Configure system</p>
+                <p className="font-medium text-gray-900">Generate Report</p>
+                <p className="text-sm text-gray-500">Export analytics data</p>
               </div>
             </button>
+          </div>
+
+          {/* Performance Metrics */}
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Performance Metrics</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Enrollment Rate</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{width: `${(activeStudents / studentCount * 100)}%`}}></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-900">{Math.round(activeStudents / studentCount * 100)}%</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Graduation Rate</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
+                    <div className="bg-blue-600 h-2 rounded-full" style={{width: `${(graduatedStudents / studentCount * 100)}%`}}></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-900">{Math.round(graduatedStudents / studentCount * 100)}%</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Course Diversity</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
+                    <div className="bg-purple-600 h-2 rounded-full" style={{width: `${Math.min(totalCourses * 10, 100)}%`}}></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-900">{totalCourses}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

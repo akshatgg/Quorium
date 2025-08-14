@@ -41,7 +41,7 @@ const courses = [
   'Communications'
 ];
 
-const statuses = ['Active', 'Inactive', 'Graduated', 'Suspended', 'On Leave'];
+
 
 /**
  * Transform user data from DummyJSON API to student format
