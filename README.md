@@ -7,23 +7,23 @@ A comprehensive, modern student management system built with React.js and Vite. 
 ## 📸 Screenshots
 
 ### Dashboard Overview
-![Dashboard](docs/dashboard.png)
+![Dashboard](./public/Dashboard.png)
 *Professional dashboard with statistics, course overview, and performance metrics*
 
 ### Student Directory - Table View
-![Student Directory Table](docs/student-table.png)
+![Student Directory Table](./public/student-table.png)
 *Comprehensive student directory with advanced filtering and search capabilities*
 
 ### Student Directory - Card View
-![Student Directory Cards](docs/student-cards.png)
+![Student Directory Cards](./public/student-card.png)
 *Clean card-based view with responsive design and detailed student information*
 
 ### Student Details Modal
-![Student Details](docs/student-details.png)
+![Student Details](./public/student-details.png)
 *Professional modal with comprehensive student information across multiple categories*
 
 ### Add New Student
-![Add Student](docs/add-student.png)
+![Add Student](./public/add-student.png)
 *Streamlined student registration form with validation and professional UI*
 
 ## ✨ Features
