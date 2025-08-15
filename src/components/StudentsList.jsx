@@ -233,11 +233,11 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
       );
     }
     return sortOrder === 'asc' ? (
-      <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
       </svg>
     ) : (
-      <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
       </svg>
     );
@@ -392,8 +392,8 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
               {/* Contact Information */}
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center mb-3">
-                  <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
@@ -546,7 +546,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
   };
 
   const StudentCard = ({ student }) => (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:border-indigo-200 hover:-translate-y-1">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:border-gray-300 hover:-translate-y-1">
       <div className="flex items-start space-x-4">
         <div className="relative">
           <img
@@ -572,12 +572,12 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
           <div className="space-y-3">
             <div className="grid grid-cols-1 gap-3 text-sm">
               <div className="flex items-center text-gray-600">
-                <div className="w-5 h-5 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                  <svg className="w-3 h-3 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-5 h-5 bg-gray-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="font-medium text-indigo-600 font-mono text-xs">{student.studentId}</span>
+                <span className="font-medium text-gray-700 font-mono text-xs">{student.studentId}</span>
               </div>
               
               <div className="flex items-center text-gray-600">
@@ -590,8 +590,8 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
               </div>
               
               <div className="flex items-center text-gray-600">
-                <div className="w-5 h-5 bg-purple-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                  <svg className="w-3 h-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-5 h-5 bg-gray-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-3 h-3 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
@@ -693,9 +693,9 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-16">
           <div className="text-center">
             <div className="relative mx-auto w-16 h-16 mb-6">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
               <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6 text-indigo-600 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-gray-600 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </div>
@@ -703,9 +703,9 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Student Information</h3>
             <p className="text-gray-600">Fetching comprehensive student data from our database...</p>
             <div className="mt-6 flex justify-center space-x-2">
-              <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           </div>
         </div>
@@ -853,20 +853,20 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
             </div>
             
             {searchTerm && (
-              <div className="mt-6 flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+              <div className="mt-6 flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-indigo-900">
+                  <span className="text-sm font-medium text-gray-900">
                     Found {filteredStudents.length} student{filteredStudents.length !== 1 ? 's' : ''} matching "{searchTerm}"
                   </span>
                 </div>
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-indigo-700 bg-white border border-indigo-200 rounded-lg hover:bg-indigo-50 transition-colors duration-200"
+                  className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
                   Clear
                 </button>
@@ -941,7 +941,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                     {currentStudents.map((student, index) => (
                       <tr key={student.id} className={`hover:bg-gray-50 transition-all duration-200 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-indigo-700 bg-indigo-100 border border-indigo-200">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-gray-700 bg-gray-100 border border-gray-200">
                             {student.studentId}
                           </span>
                         </td>
@@ -1116,7 +1116,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                           onClick={() => setCurrentPage(page)}
                           className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                             isCurrentPage
-                              ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg transform scale-105'
+                              ? 'bg-gray-800 text-white shadow-lg'
                               : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400 shadow-sm'
                           }`}
                         >
@@ -1160,8 +1160,8 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
           {filteredStudents.length === 0 && (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-16">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
@@ -1178,7 +1178,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                   {searchTerm && (
                     <button
                       onClick={() => setSearchTerm('')}
-                      className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-xl text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-xl text-white bg-gray-700 hover:bg-gray-800 transition-all duration-200 shadow-lg"
                     >
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
