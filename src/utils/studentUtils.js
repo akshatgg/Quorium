@@ -49,40 +49,61 @@ const courses = [
  * @returns {Array} Array of transformed student objects
  */
 export const transformUsersToStudents = (users) => {
-  return users.map((user, index) => {
-    // Generate a unique student ID
+  return users.map((user) => {
+    // Generate a unique student ID using the API's ID
     const studentId = `STU${String(user.id).padStart(6, '0')}`;
     
-    // Assign random course and status with weighted distribution
-    const course = courses[Math.floor(Math.random() * courses.length)];
-    
-    // Weight status distribution: 70% Active, 15% Graduated, 10% Inactive, 5% others
-    const statusWeights = [70, 85, 95, 100]; // Cumulative weights
-    const rand = Math.random() * 100;
-    let status;
-    if (rand < statusWeights[0]) status = 'Active';
-    else if (rand < statusWeights[1]) status = 'Graduated';
-    else if (rand < statusWeights[2]) status = 'Inactive';
-    else status = Math.random() > 0.5 ? 'Suspended' : 'On Leave';
-    
+    // Use only the fields directly from the API, no random data
     return {
+      // Core user data
       id: user.id,
       studentId,
       firstName: user.firstName,
       lastName: user.lastName,
+      maidenName: user.maidenName,
+      age: user.age,
+      gender: user.gender,
       email: user.email,
       phone: user.phone,
-      age: user.age,
-      course,
-      status,
+      username: user.username,
+      password: user.password,
+      birthDate: user.birthDate,
       image: user.image,
-      // Additional student-specific fields
+      
+      // Physical characteristics
+      bloodGroup: user.bloodGroup,
+      height: user.height,
+      weight: user.weight,
+      eyeColor: user.eyeColor,
+      hairColor: user.hair?.color,
+      hairType: user.hair?.type,
+      
+      // Address information
       address: formatAddress(user.address),
-      enrollmentDate: generateRandomDate(),
-      gender: user.gender || 'Not specified',
-      emergencyContact: generateEmergencyContact(user.firstName, user.lastName),
-      emergencyPhone: generatePhoneNumber(),
-      dateOfBirth: calculateDateOfBirth(user.age)
+      ip: user.ip,
+      macAddress: user.macAddress,
+      
+      // Education and work
+      university: user.university,
+      company: user.company?.name,
+      department: user.company?.department,
+      jobTitle: user.company?.title,
+      
+      // Financial data
+      bankCardNumber: user.bank?.cardNumber,
+      bankCardExpire: user.bank?.cardExpire,
+      bankCardType: user.bank?.cardType,
+      
+      // Other data
+      ein: user.ein,
+      ssn: user.ssn,
+      userAgent: user.userAgent,
+      crypto: user.crypto ? {
+        coin: user.crypto.coin,
+        wallet: user.crypto.wallet,
+        network: user.crypto.network
+      } : null,
+      role: user.role
     };
   });
 };
@@ -169,13 +190,18 @@ const calculateDateOfBirth = (age) => {
  */
 export const fetchStudentData = async () => {
   try {
-    const response = await fetch('https://dummyjson.com/users?limit=50');
+    // Fetch all 30 users from the API
+    // The API returns 30 users by default, but we can explicitly set limit=30 to be clear
+    const response = await fetch('https://dummyjson.com/users?limit=30');
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
     const data = await response.json();
+    console.log(`Fetched ${data.users.length} users from API`);
+    
+    // Pass the raw user data to the transform function
     return transformUsersToStudents(data.users);
   } catch (error) {
     console.error('Error fetching student data:', error);
@@ -308,7 +334,7 @@ export const fetchStudentsData = async () => {
     const response = await fetch('https://dummyjson.com/users');
     const data = await response.json();
     
-    return data.users.map(transformUserToStudent);
+    return transformUsersToStudents(data.users);
   } catch (error) {
     console.error('Error fetching students data:', error);
     throw new Error('Failed to fetch students data');
@@ -347,5 +373,5 @@ export const generateSampleStudents = () => {
     }
   ];
 
-  return sampleUsers.map(transformUserToStudent);
+  return transformUsersToStudents(sampleUsers);
 };

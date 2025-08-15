@@ -210,15 +210,21 @@ function App() {
                   <span className="font-medium text-blue-600">{students.length}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Active Students:</span>
+                  <span>Male Students:</span>
                   <span className="font-medium text-green-600">
-                    {students.filter(s => s.status === 'Active').length}
+                    {students.filter(s => s.gender === 'male').length}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Total Courses:</span>
+                  <span>Female Students:</span>
+                  <span className="font-medium text-pink-600">
+                    {students.filter(s => s.gender === 'female').length}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Universities:</span>
                   <span className="font-medium text-purple-600">
-                    {new Set(students.map(s => s.course)).size}
+                    {new Set(students.map(s => s.university)).size}
                   </span>
                 </div>
               </div>

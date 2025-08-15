@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterRole, setFilterRole] = useState('All');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +18,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
     const fetchDetailedData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://dummyjson.com/users?limit=50');
+        const response = await fetch('https://dummyjson.com/users');
         const data = await response.json();
         
         // Transform the data to include all details
@@ -53,7 +53,6 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
           role: user.role,
           // Additional student-specific fields
           course: getRandomCourse(),
-          status: getRandomStatus(),
           enrollmentDate: generateRandomDate(),
           gpa: (Math.random() * 2 + 2).toFixed(2), // GPA between 2.0-4.0
           emergencyContact: `Emergency Contact ${index + 1}`,
@@ -82,13 +81,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
     return courses[Math.floor(Math.random() * courses.length)];
   };
 
-  const getRandomStatus = () => {
-    const rand = Math.random() * 100;
-    if (rand < 70) return 'Active';
-    if (rand < 85) return 'Graduated';
-    if (rand < 95) return 'Inactive';
-    return 'Suspended';
-  };
+  // Status functionality has been removed to focus on actual API data
 
   const generateRandomDate = () => {
     const end = new Date();
@@ -116,9 +109,9 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
         (student.company?.name && student.company.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
         student.studentId.toString().includes(searchTerm);
       
-      const matchesStatus = filterStatus === 'All' || student.status === filterStatus;
+      const matchesRole = filterRole === 'All' || student.role === filterRole;
       
-      return matchesSearch && matchesStatus;
+      return matchesSearch && matchesRole;
     })
     .sort((a, b) => {
       let aValue, bValue;
@@ -166,50 +159,41 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
   const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
   const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
 
-  const getStatusBadge = (status) => {
-    const statusConfig = {
-      'Active': { 
-        bg: 'bg-emerald-50', 
-        text: 'text-emerald-700', 
-        border: 'border-emerald-200',
-        icon: '●',
-        dotColor: 'bg-emerald-400'
+  // Status badge functionality removed as requested
+
+  const getRoleBadge = (role) => {
+    const roleConfig = {
+      'admin': { 
+        bg: 'bg-purple-50', 
+        text: 'text-purple-700', 
+        border: 'border-purple-200',
+        dotColor: 'bg-purple-400'
       },
-      'Inactive': { 
-        bg: 'bg-red-50', 
-        text: 'text-red-700', 
-        border: 'border-red-200',
-        icon: '●',
-        dotColor: 'bg-red-400'
-      },
-      'Graduated': { 
+      'user': { 
         bg: 'bg-blue-50', 
         text: 'text-blue-700', 
         border: 'border-blue-200',
-        icon: '●',
         dotColor: 'bg-blue-400'
       },
-      'Suspended': { 
-        bg: 'bg-amber-50', 
-        text: 'text-amber-700', 
-        border: 'border-amber-200',
-        icon: '●',
-        dotColor: 'bg-amber-400'
+      'moderator': { 
+        bg: 'bg-green-50', 
+        text: 'text-green-700', 
+        border: 'border-green-200',
+        dotColor: 'bg-green-400'
       }
     };
     
-    const config = statusConfig[status] || { 
+    const config = roleConfig[role] || { 
       bg: 'bg-gray-50', 
       text: 'text-gray-700', 
       border: 'border-gray-200',
-      icon: '●',
       dotColor: 'bg-gray-400'
     };
     
     return (
       <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${config.bg} ${config.text} ${config.border}`}>
         <span className={`w-2 h-2 rounded-full mr-2 ${config.dotColor}`}></span>
-        {status}
+        {role || 'user'}
       </span>
     );
   };
@@ -366,10 +350,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                     <span className="text-gray-600">Course:</span>
                     <span className="text-gray-900">{student.course}</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Status:</span>
-                    {getStatusBadge(student.status)}
-                  </div>
+                  {/* Status field removed as requested */}
                   {student.gpa && (
                     <div className="flex justify-between">
                       <span className="text-gray-600">GPA:</span>
@@ -566,7 +547,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
               </h3>
               <p className="text-sm text-gray-500 font-medium">{student.course}</p>
             </div>
-            {getStatusBadge(student.status)}
+            {getRoleBadge(student.role)}
           </div>
           
           <div className="space-y-3">
@@ -724,15 +705,15 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                 <div className="flex items-center mt-3 space-x-6 text-sm text-gray-500">
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span>{filteredStudents.length} Total Students</span>
+                    <span>30 Total Students</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>{filteredStudents.filter(s => s.status === 'Active').length} Active</span>
+                    <span>Male/Female Students</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                    <span>{filteredStudents.filter(s => s.status === 'Graduated').length} Graduated</span>
+                    <span>Various Roles</span>
                   </div>
                 </div>
               </div>
@@ -796,24 +777,23 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                 </div>
               </div>
 
-              {/* Status Filter */}
+              {/* Role Filter */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Status Filter
+                  Role Filter
                 </label>
                 <select
-                  value={filterStatus}
+                  value={filterRole}
                   onChange={(e) => {
-                    setFilterStatus(e.target.value);
+                    setFilterRole(e.target.value);
                     setCurrentPage(1);
                   }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 text-sm"
                 >
-                  <option value="All">All Status</option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                  <option value="Graduated">Graduated</option>
-                  <option value="Suspended">Suspended</option>
+                  <option value="All">All Roles</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                  <option value="moderator">Moderator</option>
                 </select>
               </div>
 
@@ -927,7 +907,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                         </div>
                       </th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                        Status
+                        Role
                       </th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         Company
@@ -990,7 +970,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {getStatusBadge(student.status)}
+                          {getRoleBadge(student.role)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {student.company ? (
@@ -1187,7 +1167,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                     </button>
                   )}
                   <button
-                    onClick={() => setFilterStatus('All')}
+                    onClick={() => setFilterRole('All')}
                     className="inline-flex items-center px-6 py-3 border border-gray-300 text-sm font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 transition-all duration-200 shadow-sm"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
