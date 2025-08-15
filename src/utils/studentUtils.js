@@ -41,14 +41,12 @@ const courses = [
   'Communications'
 ];
 
-
-
 /**
  * Transform user data from DummyJSON API to student format
  * @param {Array} users - Array of user objects from API
  * @returns {Array} Array of transformed student objects
  */
-export const transformUsersToStudents = (users) => {
+const transformUsersToStudents = (users) => {
   return users.map((user) => {
     // Generate a unique student ID using the API's ID
     const studentId = `STU${String(user.id).padStart(6, '0')}`;
@@ -127,14 +125,14 @@ const formatAddress = (address) => {
 };
 
 /**
- * Generate a random enrollment date within the last 4 years
- * @returns {string} Date in YYYY-MM-DD format
+ * Generate a random phone number
+ * @returns {string} Phone number
  */
-const generateRandomDate = () => {
-  const end = new Date();
-  const start = new Date(end.getFullYear() - 4, 0, 1);
-  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  return randomDate.toISOString().split('T')[0];
+const generatePhoneNumber = () => {
+  const areaCode = Math.floor(Math.random() * 900) + 100;
+  const exchange = Math.floor(Math.random() * 900) + 100;
+  const number = Math.floor(Math.random() * 9000) + 1000;
+  return `(${areaCode}) ${exchange}-${number}`;
 };
 
 /**
@@ -159,17 +157,6 @@ const generateEmergencyContact = (firstName, lastName) => {
 };
 
 /**
- * Generate a random phone number
- * @returns {string} Phone number
- */
-const generatePhoneNumber = () => {
-  const areaCode = Math.floor(Math.random() * 900) + 100;
-  const exchange = Math.floor(Math.random() * 900) + 100;
-  const number = Math.floor(Math.random() * 9000) + 1000;
-  return `(${areaCode}) ${exchange}-${number}`;
-};
-
-/**
  * Calculate date of birth based on age
  * @param {number} age 
  * @returns {string} Date of birth in YYYY-MM-DD format
@@ -191,8 +178,7 @@ const calculateDateOfBirth = (age) => {
 export const fetchStudentData = async () => {
   try {
     // Fetch all 30 users from the API
-    // The API returns 30 users by default, but we can explicitly set limit=30 to be clear
-    const response = await fetch('https://dummyjson.com/users?limit=30');
+    const response = await fetch('https://dummyjson.com/users');
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -230,148 +216,19 @@ export const createMockStudent = () => {
     phone: generatePhoneNumber(),
     age,
     course: courses[Math.floor(Math.random() * courses.length)],
-    status: 'Active', // Default new students to Active
     image: `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=200`,
     address: `${Math.floor(Math.random() * 9999) + 1} Main St, Anytown, State ${Math.floor(Math.random() * 99999) + 10000}`,
     enrollmentDate: new Date().toISOString().split('T')[0], // Today's date for new students
     gender: ['Male', 'Female', 'Other'][Math.floor(Math.random() * 3)],
     emergencyContact: generateEmergencyContact(firstName, lastName),
     emergencyPhone: generatePhoneNumber(),
-    dateOfBirth: calculateDateOfBirth(age)
+    dateOfBirth: calculateDateOfBirth(age),
+    role: ['user', 'admin', 'moderator'][Math.floor(Math.random() * 3)]
   };
 };
 
-/**
- * Validate student data
- * @param {Object} student - Student object to validate
- * @returns {Object} Validation result with isValid boolean and errors array
- */
-export const validateStudent = (student) => {
-  const errors = [];
-  
-  if (!student.firstName || student.firstName.trim().length < 2) {
-    errors.push('First name must be at least 2 characters long');
-  }
-  
-  if (!student.lastName || student.lastName.trim().length < 2) {
-    errors.push('Last name must be at least 2 characters long');
-  }
-  
-  if (!student.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(student.email)) {
-    errors.push('Valid email address is required');
-  }
-  
-  if (!student.phone || student.phone.length < 10) {
-    errors.push('Valid phone number is required');
-  }
-  
-  if (!student.age || student.age < 16 || student.age > 100) {
-    errors.push('Age must be between 16 and 100');
-  }
-  
-  if (!student.course) {
-    errors.push('Course selection is required');
-  }
-  
-  return {
-    isValid: errors.length === 0,
-    errors
-  };
-};
-
-/**
- * Generate student statistics
- * @param {Array} students - Array of student objects
- * @returns {Object} Statistics object
- */
-export const generateStudentStats = (students) => {
-  const stats = {
-    total: students.length,
-    byStatus: {},
-    byCourse: {},
-    byGender: {},
-    averageAge: 0,
-    ageRange: { min: 0, max: 0 }
-  };
-  
-  let totalAge = 0;
-  let minAge = Infinity;
-  let maxAge = -Infinity;
-  
-  students.forEach(student => {
-    // Status statistics
-    stats.byStatus[student.status] = (stats.byStatus[student.status] || 0) + 1;
-    
-    // Course statistics
-    stats.byCourse[student.course] = (stats.byCourse[student.course] || 0) + 1;
-    
-    // Gender statistics
-    stats.byGender[student.gender] = (stats.byGender[student.gender] || 0) + 1;
-    
-    // Age statistics
-    totalAge += student.age;
-    minAge = Math.min(minAge, student.age);
-    maxAge = Math.max(maxAge, student.age);
-  });
-  
-  stats.averageAge = students.length > 0 ? Math.round(totalAge / students.length) : 0;
-  stats.ageRange = { min: minAge === Infinity ? 0 : minAge, max: maxAge === -Infinity ? 0 : maxAge };
-  
-  return stats;
-};
-
+// Export only the required functions
 export default {
-  transformUsersToStudents,
   fetchStudentData,
-  createMockStudent,
-  validateStudent,
-  generateStudentStats
-};
-
-// Fetch and transform students data
-export const fetchStudentsData = async () => {
-  try {
-    const response = await fetch('https://dummyjson.com/users');
-    const data = await response.json();
-    
-    return transformUsersToStudents(data.users);
-  } catch (error) {
-    console.error('Error fetching students data:', error);
-    throw new Error('Failed to fetch students data');
-  }
-};
-
-// Generate sample data for demonstration
-export const generateSampleStudents = () => {
-  const sampleUsers = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe", 
-      email: "john.doe@example.com",
-      phone: "+1-234-567-8901",
-      age: 20,
-      image: "https://ui-avatars.com/api/?name=John+Doe&background=random"
-    },
-    {
-      id: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@example.com", 
-      phone: "+1-234-567-8902",
-      age: 22,
-      image: "https://ui-avatars.com/api/?name=Jane+Smith&background=random"
-    },
-    {
-      id: 3,
-      firstName: "Mike",
-      lastName: "Johnson",
-      email: "mike.johnson@example.com",
-      phone: "+1-234-567-8903", 
-      age: 21,
-      image: "https://ui-avatars.com/api/?name=Mike+Johnson&background=random"
-    }
-  ];
-
-  return transformUsersToStudents(sampleUsers);
+  createMockStudent
 };
