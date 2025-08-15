@@ -34,9 +34,9 @@ const Dashboard = ({ studentCount, students = [], onNavigate }) => {
       value: studentCount,
       icon: '👥',
       color: 'blue',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-600',
-      borderColor: 'border-blue-200',
+      bgColor: 'bg-gradient-to-br from-blue-50 to-indigo-50',
+      textColor: 'text-blue-700',
+      borderColor: 'border-blue-100',
       change: '+12%',
       changeType: 'increase'
     },
@@ -45,9 +45,9 @@ const Dashboard = ({ studentCount, students = [], onNavigate }) => {
       value: activeStudents,
       icon: '✅',
       color: 'green',
-      bgColor: 'bg-green-50',
-      textColor: 'text-green-600',
-      borderColor: 'border-green-200',
+      bgColor: 'bg-gradient-to-br from-green-50 to-emerald-50',
+      textColor: 'text-green-700',
+      borderColor: 'border-green-100',
       change: '+8%',
       changeType: 'increase'
     },
@@ -56,9 +56,9 @@ const Dashboard = ({ studentCount, students = [], onNavigate }) => {
       value: totalCourses,
       icon: '📚',
       color: 'purple',
-      bgColor: 'bg-purple-50',
-      textColor: 'text-purple-600',
-      borderColor: 'border-purple-200',
+      bgColor: 'bg-gradient-to-br from-purple-50 to-violet-50',
+      textColor: 'text-purple-700',
+      borderColor: 'border-purple-100',
       change: '+3%',
       changeType: 'increase'
     },
@@ -67,9 +67,9 @@ const Dashboard = ({ studentCount, students = [], onNavigate }) => {
       value: graduatedStudents,
       icon: '🎓',
       color: 'amber',
-      bgColor: 'bg-amber-50',
-      textColor: 'text-amber-600',
-      borderColor: 'border-amber-200',
+      bgColor: 'bg-gradient-to-br from-amber-50 to-yellow-50',
+      textColor: 'text-amber-700',
+      borderColor: 'border-amber-100',
       change: '+15%',
       changeType: 'increase'
     }
@@ -78,16 +78,16 @@ const Dashboard = ({ studentCount, students = [], onNavigate }) => {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl shadow-lg p-6 text-gray-800 border border-blue-100">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">
+            <h1 className="text-3xl font-bold mb-2 text-gray-800">
               Welcome to StudentHub Dashboard
             </h1>
-            <p className="text-blue-100 text-lg">
+            <p className="text-gray-600 text-lg">
               Manage your student records efficiently with our comprehensive platform
             </p>
-            <div className="mt-4 flex items-center space-x-4 text-sm text-blue-100">
+            <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500">
               <span>📅 {new Date().toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 

@@ -714,37 +714,37 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
       {!loading && (
         <>
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 rounded-2xl shadow-lg p-8 text-white">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-6 lg:space-y-0">
               <div>
-                <h2 className="text-3xl font-bold mb-2">Student Directory</h2>
-                <p className="text-indigo-100 text-lg">
+                <h2 className="text-3xl font-bold mb-2 text-gray-900">Student Directory</h2>
+                <p className="text-gray-600 text-lg">
                   Complete student records with comprehensive information
                 </p>
-                <div className="flex items-center mt-3 space-x-6 text-sm text-indigo-200">
+                <div className="flex items-center mt-3 space-x-6 text-sm text-gray-500">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     <span>{filteredStudents.length} Total Students</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>{filteredStudents.filter(s => s.status === 'Active').length} Active</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                     <span>{filteredStudents.filter(s => s.status === 'Graduated').length} Graduated</span>
                   </div>
                 </div>
               </div>
               
               {/* View Mode Toggle */}
-              <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-xl p-1">
+              <div className="flex items-center bg-gray-100 rounded-xl p-1 border border-gray-200">
                 <button
                   onClick={() => setViewMode('table')}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                     viewMode === 'table' 
-                      ? 'bg-white text-indigo-600 shadow-sm' 
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200' 
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }`}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -756,8 +756,8 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                   onClick={() => setViewMode('cards')}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                     viewMode === 'cards' 
-                      ? 'bg-white text-indigo-600 shadow-sm' 
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200' 
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }`}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -786,7 +786,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                       setSearchTerm(e.target.value);
                       setCurrentPage(1);
                     }}
-                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-sm placeholder-gray-400"
+                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 text-sm placeholder-gray-400"
                   />
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -807,7 +807,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                     setFilterStatus(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 text-sm"
                 >
                   <option value="All">All Status</option>
                   <option value="Active">Active</option>
@@ -825,7 +825,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 text-sm"
                 >
                   <option value="name">Name</option>
                   <option value="studentId">Student ID</option>
@@ -844,7 +844,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                 <select
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 text-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-all duration-200 text-sm"
                 >
                   <option value="asc">Ascending</option>
                   <option value="desc">Descending</option>
@@ -879,10 +879,10 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="min-w-full">
-                  <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                  <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
                       <th 
-                        className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-all duration-200"
+                        className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-all duration-200"
                         onClick={() => handleSort('studentId')}
                       >
                         <div className="flex items-center space-x-2">
@@ -891,7 +891,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                         </div>
                       </th>
                       <th 
-                        className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-all duration-200"
+                        className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-all duration-200"
                         onClick={() => handleSort('name')}
                       >
                         <div className="flex items-center space-x-2">
@@ -900,7 +900,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                         </div>
                       </th>
                       <th 
-                        className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-all duration-200"
+                        className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-all duration-200"
                         onClick={() => handleSort('email')}
                       >
                         <div className="flex items-center space-x-2">
@@ -909,7 +909,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                         </div>
                       </th>
                       <th 
-                        className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-all duration-200"
+                        className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-all duration-200"
                         onClick={() => handleSort('university')}
                       >
                         <div className="flex items-center space-x-2">
@@ -918,7 +918,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                         </div>
                       </th>
                       <th 
-                        className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-all duration-200"
+                        className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-all duration-200"
                         onClick={() => handleSort('course')}
                       >
                         <div className="flex items-center space-x-2">
@@ -926,18 +926,18 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
                           <SortIcon field="course" />
                         </div>
                       </th>
-                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                         Company
                       </th>
-                      <th className="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-100">
+                  <tbody className="bg-white divide-y divide-gray-200">
                     {currentStudents.map((student, index) => (
                       <tr key={student.id} className={`hover:bg-gray-50 transition-all duration-200 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
                         <td className="px-6 py-4 whitespace-nowrap">

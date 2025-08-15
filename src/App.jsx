@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
 import StudentsList from './components/StudentsList';
-import AddStudent from './components/AddStudent';
+import AddStudent from './components/AddStudent_new';
 import { fetchStudentData, createMockStudent } from './utils/studentUtils';
 import './App.css';
 

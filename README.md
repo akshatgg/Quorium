@@ -2,7 +2,9 @@
 
 ![Quorium Logo](https://img.shields.io/badge/Quorium-Student%20Management-blue?style=for-the-badge&logo=graduation-cap)
 
-A comprehensive, modern student management system built with React.js and Vite. Quorium provides an intuitive interface for managing student records, tracking academic progress, and generating insightful analytics.
+A comprehensive, modern student management system built with React.js and Vite. Quorium provides an intuitive interface for- **Large Screens**: Optimal layout for large displays (1440px+)
+
+## 📈 Performance Optimizationsnaging student records, tracking academic progress, and generating insightful analytics.
 
 ## 📸 Screenshots
 
@@ -286,14 +288,7 @@ module.exports = {
 - **Desktop Optimization**: Full feature set on desktop (1024px+)
 - **Large Screens**: Optimal layout for large displays (1440px+)
 
-## 🛡️ Security Considerations
-
-- **Data Validation**: Client-side validation for all form inputs
-- **Secure State Management**: Proper state handling to prevent data leaks
-- **XSS Protection**: Sanitized data rendering throughout the application
-- **HTTPS Ready**: Prepared for secure deployment with HTTPS
-
-## 🚀 Deployment
+## � Performance Optimizations
 
 ### Build for Production
 ```bash
@@ -319,18 +314,6 @@ npm run build
 - **Bundle Analysis**: Tree shaking for minimal bundle size
 - **Caching Strategy**: Efficient browser caching for static resources
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👨‍💻 Author
 
 **Akshat Gupta**
@@ -343,14 +326,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Tailwind CSS** for the amazing utility-first CSS framework
 - **React Team** for the incredible frontend framework
 - **Vite** for the lightning-fast build tool
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/akshatgg/Quorium/issues) page
-2. Create a new issue with detailed description
-3. Contact the development team
 
 ---
 
