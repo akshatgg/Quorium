@@ -22,7 +22,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
         const data = await response.json();
         
         // Transform the data to include all details
-        const transformedStudents = data.users.map((user, index) => ({
+        const transformedStudents = data.users.map((user) => ({
           id: user.id,
           studentId: `STU${String(user.id).padStart(6, '0')}`,
           firstName: user.firstName,
@@ -53,10 +53,7 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
           role: user.role,
           // Additional student-specific fields
           course: getRandomCourse(),
-          enrollmentDate: generateRandomDate(),
-          gpa: (Math.random() * 2 + 2).toFixed(2), // GPA between 2.0-4.0
-          emergencyContact: `Emergency Contact ${index + 1}`,
-          emergencyPhone: generatePhoneNumber()
+          
         }));
         
         setDetailedStudents(transformedStudents);
@@ -81,23 +78,9 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
     return courses[Math.floor(Math.random() * courses.length)];
   };
 
-  // Status functionality has been removed to focus on actual API data
 
-  const generateRandomDate = () => {
-    const end = new Date();
-    const start = new Date(end.getFullYear() - 4, 0, 1);
-    const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    return randomDate.toISOString().split('T')[0];
-  };
 
-  const generatePhoneNumber = () => {
-    const areaCode = Math.floor(Math.random() * 900) + 100;
-    const exchange = Math.floor(Math.random() * 900) + 100;
-    const number = Math.floor(Math.random() * 9000) + 1000;
-    return `+1-${areaCode}-${exchange}-${number}`;
-  };
-
-  // Filter and sort students
+ 
   const filteredStudents = (detailedStudents.length > 0 ? detailedStudents : students)
     .filter(student => {
       const matchesSearch = 
@@ -153,13 +136,12 @@ const StudentsList = ({ students, onDeleteStudent, onEditStudent }) => {
       }
     });
 
-  // Calculate pagination
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
   const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
   const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
 
-  // Status badge functionality removed as requested
+
 
   const getRoleBadge = (role) => {
     const roleConfig = {

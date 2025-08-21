@@ -61,12 +61,12 @@ const AddStudent = ({ onAddStudent, existingStudents = [] }) => {
     cryptoNetwork: '',
     role: 'student'
   });
-
+  
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState('basic');
-
+  
   const courses = [
     'Computer Science', 'Software Engineering', 'Data Science', 'Artificial Intelligence',
     'Cybersecurity', 'Web Development', 'Mobile Development', 'Business Administration',

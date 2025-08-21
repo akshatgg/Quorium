@@ -3,7 +3,7 @@ import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
 import StudentsList from './components/StudentsList';
 import AddStudent from './components/AddStudent_new';
-import { fetchStudentData, createMockStudent } from './utils/studentUtils';
+import { fetchStudentData } from './utils/studentUtils';
 import './App.css';
 
 function App() {
@@ -18,27 +18,26 @@ function App() {
         setLoading(true);
         setError(null);
         
-        // Try to fetch from API
+        
         const fetchedStudents = await fetchStudentData();
         setStudents(fetchedStudents);
         
       } catch (apiError) {
         console.warn('API fetch failed, generating sample data:', apiError);
         
-        // Generate sample students if API fails
-        const sampleStudents = Array.from({ length: 25 }, () => createMockStudent());
-        setStudents(sampleStudents);
+   
         
-        // Set a non-blocking error message
+        
+       
         setError('Using sample data - API unavailable');
       } finally {
         setLoading(false);
       }
     };
-
+    
     loadStudents();
   }, []);
-
+  
   const handleAddStudent = (newStudent) => {
     setStudents(prev => [newStudent, ...prev]);
     
@@ -62,7 +61,7 @@ function App() {
     );
   };
 
-  // Loading state
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
